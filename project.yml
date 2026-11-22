@@ -1,0 +1,42 @@
+name: AuraCustomize
+options:
+  bundleIdPrefix: com.aura.customizer
+  deploymentTarget:
+    iOS: "18.0"
+
+targets:
+  AuraCustomize:
+    type: application
+    platform: iOS
+    sources:
+      - path: AuraApp.swift
+      - path: ContentView.swift
+      - path: WidgetStudioView.swift
+      - path: IconEngineView.swift
+      - path: ProfileGenerator.swift
+      - path: LockScreenStudioView.swift
+      - path: WallpaperRenderer.swift
+      - path: PresetsView.swift
+      - path: SharedModels.swift
+    dependencies:
+      - target: AuraWidgetExtension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.aura.customizer.app
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription: "Сохранение обоев для iPhone 11 Pro"
+        INFOPLIST_KEY_NSSupportsLiveActivities: YES
+        GENERATE_INFOPLIST_FILE: YES
+
+  AuraWidgetExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: AuraWidgets.swift
+      - path: SharedModels.swift
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.aura.customizer.app.widgets
+        GENERATE_INFOPLIST_FILE: YES
