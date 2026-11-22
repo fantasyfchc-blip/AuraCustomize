@@ -1,0 +1,19 @@
+name: Build IPA
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - run: brew install xcodegen && xcodegen generate
+      - run: |
+          xcodebuild archive -project AuraCustomize.xcodeproj -scheme AuraCustomize -configuration Release -archivePath build/App.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          mkdir -p build/Payload && cp -r build/App.xcarchive/Products/Applications/AuraCustomize.app build/Payload/
+          cd build && zip -r AuraCustomize.ipa Payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AuraCustomize-IPA
+          path: build/AuraCustomize.ipa
